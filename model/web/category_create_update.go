@@ -1,6 +1,6 @@
 package web
 
-type CategoryCreateResponse struct {
+type CategoryCreateUpdate struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
 }
