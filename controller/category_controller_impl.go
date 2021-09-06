@@ -13,6 +13,12 @@ type CategoryControllerImpl struct {
 	CategoryService service.CategoryService //interface not required to set pointer
 }
 
+func NewCategoryController(categoryService service.CategoryService) CategoryController  {
+	return &CategoryControllerImpl {
+		CategoryService: categoryService,
+	}
+}
+
 func (controller CategoryControllerImpl) Create(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	categoryCreateRequest := web.CategoryCreateRequest{}
 	helper.ReadFromRequestBody(r, &categoryCreateRequest)
@@ -36,7 +42,7 @@ func (controller CategoryControllerImpl) Create(w http.ResponseWriter, r *http.R
 	//helper.PanicIfError(err)
 }
 
-func (controller CategoryControllerImpl) update(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func (controller CategoryControllerImpl) Update(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	categoryCreateUpdate := web.CategoryCreateUpdate{}
 	helper.ReadFromRequestBody(r, &categoryCreateUpdate)
 

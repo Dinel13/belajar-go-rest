@@ -11,13 +11,19 @@ import (
 type CategoryRepositoryImpl struct {
 }
 
+func NewCategoryRepository() CategoryRepository {
+	return &CategoryRepositoryImpl{}
+}
+
 func (repository *CategoryRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, category domain.Category) domain.Category {
 	SQL := "INSERT INTO category (name) VALUES (?)"
 	result, err := tx.ExecContext(ctx, SQL, category.Name)
 	helper.PanicIfError(err)
 
-	category.Id, err = result.LastInsertId()
+	id, err := result.LastInsertId()
 	helper.PanicIfError(err)
+
+	category.Id = int(id)
 	return category
 }
 
